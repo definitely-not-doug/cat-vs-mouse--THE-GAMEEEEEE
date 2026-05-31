@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float movementX;
     private float movementY;
+    
     PlayerInput playerInput;
 
     public float speed = 0f;
@@ -35,5 +36,7 @@ public class PlayerController : MonoBehaviour
 
         //add force needs a vector3 variable
         rb.AddForce(movement * speed);
+
+
     }
 }
