@@ -1,11 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private float movementX;
     private float movementY;
+    private float count;
+    public TextMeshProUGUI countText;
+    public TextMeshProUGUI objectiveText;
+    public GameObject winText;
+    public GameObject door;
+    public GameObject winBox;
     
     PlayerInput playerInput;
 
@@ -18,6 +25,9 @@ public class PlayerController : MonoBehaviour
         //playerInput.currentActionMap?.Enable();
        
         rb = GetComponent <Rigidbody>();
+        count = 0f;
+        winText.SetActive(false);
+        objectiveText.text = "Objective: Collect 5 cheese items.";
     }
 
     // Update is called once per frame
@@ -38,5 +48,34 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(movement * speed);
 
 
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Item"))
+        {
+            other.gameObject.SetActive(false);
+            count = count + 1;
+            SetCount();
+
+            if(count == 5)
+            {
+                objectiveText.text = "Objective: Escape through the back door!";
+                door.SetActive(false);
+            }
+        }
+
+        if (other.gameObject.CompareTag("Win"))
+        {
+            winText.SetActive(true);
+            objectiveText.text = "Objective: You did it!!!!";
+        }
+
+        
+    }
+
+    void SetCount()
+    {
+        countText.text = "Count: " + count.ToString();
+        
     }
 }
