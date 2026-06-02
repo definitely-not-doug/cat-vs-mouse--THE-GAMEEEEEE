@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public GameObject winText;
     public GameObject door;
     public GameObject winBox;
+    private float elapsedTime = 0f;
     
     PlayerInput playerInput;
 
@@ -38,6 +39,15 @@ public class PlayerController : MonoBehaviour
 
         movementX = movementVector.x;
         movementY = movementVector.y;
+    }
+
+    void Update()
+    {
+        elapsedTime += Time.deltaTime;
+        
+        Debug.Log(elapsedTime);
+
+        
     }
 
     void FixedUpdate()
@@ -68,6 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             winText.SetActive(true);
             objectiveText.text = "Objective: You did it!!!!";
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
 
         
@@ -75,7 +86,19 @@ public class PlayerController : MonoBehaviour
 
     void SetCount()
     {
-        countText.text = "Count: " + count.ToString();
+        countText.text = "Cheese: " + count.ToString();
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+
+            winText.gameObject.SetActive(true);
+            winText.GetComponent<TextMeshProUGUI>().text = "You Lose!!!";
+        }
+
     }
 }
