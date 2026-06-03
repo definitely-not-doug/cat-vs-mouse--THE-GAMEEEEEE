@@ -105,7 +105,13 @@ public class PlayerController : MonoBehaviour
         {
             winText.SetActive(true);
             objectiveText.text = "Objective: You did it!!!!";
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                Destroy(enemies[i]);
+            }
+           
         }
 
         

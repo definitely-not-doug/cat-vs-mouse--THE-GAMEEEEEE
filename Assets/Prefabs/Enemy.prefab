@@ -180,4 +180,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f8371a1cad8754da1c9e1b317b0c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  player: {fileID: 0}
