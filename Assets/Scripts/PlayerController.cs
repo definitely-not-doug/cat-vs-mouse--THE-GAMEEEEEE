@@ -10,10 +10,14 @@ public class PlayerController : MonoBehaviour
     private float count;
     public TextMeshProUGUI countText;
     public TextMeshProUGUI objectiveText;
+    public TextMeshProUGUI timerText;
     public GameObject winText;
     public GameObject door;
     public GameObject winBox;
-    private float elapsedTime = 0f;
+    public float spawnKitty = 15f;
+    public float spawnTime = 1;
+    public GameObject kittyCat;
+    public float initialTime = 60f;
     
     PlayerInput playerInput;
 
@@ -21,9 +25,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //playerInput = GetComponent<PlayerInput>();
-       // InputSystem.actions.Disable();
-        //playerInput.currentActionMap?.Enable();
+
        
         rb = GetComponent <Rigidbody>();
         count = 0f;
@@ -43,11 +45,36 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        elapsedTime += Time.deltaTime;
-        
-        Debug.Log(elapsedTime);
+        SpawnKitty();
+        if (initialTime > 0)
+        {
+            initialTime -= Time.deltaTime;
+            
+
+        }
+        else
+        {
+            initialTime = 0;
+        }
 
         
+        
+        timerText.text = Mathf.RoundToInt(initialTime).ToString();
+
+
+
+        if (initialTime == 0)
+        {
+            Destroy(gameObject);
+
+            winText.gameObject.SetActive(true);
+            winText.GetComponent<TextMeshProUGUI>().text = "You Lose!!!";
+        }
+
+
+
+
+
     }
 
     void FixedUpdate()
@@ -99,6 +126,23 @@ public class PlayerController : MonoBehaviour
             winText.gameObject.SetActive(true);
             winText.GetComponent<TextMeshProUGUI>().text = "You Lose!!!";
         }
+
+    }
+
+    void SpawnKitty()
+    {
+        if (initialTime > 0)
+        {
+            if (initialTime <= 60 - spawnKitty * spawnTime)
+            {
+                Instantiate(kittyCat, new Vector3(-10, 0, 27.5f), Quaternion.identity);
+                kittyCat.tag = "Enemy";
+                spawnTime = spawnTime + 1;
+                SpawnKitty();
+
+            }
+        }
+
 
     }
 }

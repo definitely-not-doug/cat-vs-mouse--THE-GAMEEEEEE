@@ -926,7 +926,7 @@ MonoBehaviour:
   winBox: {fileID: 236960725}
   spawnKitty: 15
   spawnTime: 1
-  kittyCat: {fileID: 2115524021}
+  kittyCat: {fileID: 5839718340989775068, guid: ab5fd0ad30b14534a9d09e7fa7987990, type: 3}
   initialTime: 60
   speed: 5
 --- !u!54 &450623367
@@ -3394,11 +3394,6 @@ Transform:
   - {fileID: 1212169022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2115524021 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5839718340989775068, guid: ab5fd0ad30b14534a9d09e7fa7987990, type: 3}
-  m_PrefabInstance: {fileID: 1897315541046916427}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2129457973
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,11 +3,12 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     private NavMeshAgent navMeshAgent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        player = GameObject.Find("Player").GetComponent<Transform>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         
     }
