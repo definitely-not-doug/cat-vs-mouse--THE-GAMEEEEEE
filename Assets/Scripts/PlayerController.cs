@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public float spawnTime = 1;
     public GameObject kittyCat;
     public float initialTime = 60f;
+    private Boolean con = false;
     
     PlayerInput playerInput;
 
@@ -69,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
             winText.gameObject.SetActive(true);
             winText.GetComponent<TextMeshProUGUI>().text = "You Lose!!!";
+            con = true;
         }
 
 
@@ -103,13 +106,14 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Win"))
         {
+            con = true;
             winText.SetActive(true);
             objectiveText.text = "Objective: You did it!!!!";
 
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             for (int i = 0; i < enemies.Length; i++)
             {
-                Destroy(enemies[i]);
+                Destroy(enemies[i], 5f);
             }
            
         }
@@ -137,17 +141,21 @@ public class PlayerController : MonoBehaviour
 
     void SpawnKitty()
     {
-        if (initialTime > 0)
+        if (con ==false)
         {
-            if (initialTime <= 60 - spawnKitty * spawnTime)
+            if (initialTime > 0)
             {
-                Instantiate(kittyCat, new Vector3(-10, 0, 27.5f), Quaternion.identity);
-                kittyCat.tag = "Enemy";
-                spawnTime = spawnTime + 1;
-                SpawnKitty();
+                if (initialTime <= 60 - spawnKitty * spawnTime)
+                {
+                    Instantiate(kittyCat, new Vector3(-10, 0, 27.5f), Quaternion.identity);
+                    kittyCat.tag = "Enemy";
+                    spawnTime = spawnTime + 1;
+                    SpawnKitty();
 
+                }
             }
         }
+
 
 
     }
