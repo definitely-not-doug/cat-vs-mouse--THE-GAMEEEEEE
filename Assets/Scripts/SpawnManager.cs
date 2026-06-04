@@ -26,9 +26,20 @@ public class SpawnManager : MonoBehaviour
 
     private Vector3 GenerateSpawnPos()
     {
-        float spawnPosX = Random.Range(-2.5f, 3);
-        float spawPosZ = Random.Range(-20, 36);
-        Vector3 randomPos = new Vector3(spawnPosX, 1 , spawPosZ);
+        Vector3 randomPos;
+        Collider[] colliders;
+
+        do
+        {
+            float spawnPosX = Random.Range(-2.5f, 3);
+            float spawPosZ = Random.Range(-20, 36);
+             randomPos = new Vector3(spawnPosX, 1.25f, spawPosZ);
+
+            colliders = Physics.OverlapSphere(randomPos, 0.5f);
+        }
+
+        while (colliders.Length > 0);
+
         return randomPos;
     }
 
