@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public GameObject restartButton;
     public GameObject winText;
     public GameObject door;
+    public gameObject winBlock;
     public GameObject winBox;
     public float spawnKitty = 15f;
     public float spawnTime = 1;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         count = 0f;
         winText.SetActive(false);
         restartButton.SetActive(false);
+        winBlock.SetActive(false);
         kittyCatCount.text = "Kitty Cats: " + spawnTime.ToString();
         objectiveText.text = "Objective: Collect 5 cheese items.";
     }
@@ -118,6 +120,7 @@ public class PlayerController : MonoBehaviour
             {
                 objectiveText.text = "Objective: Escape through the back door!";
                 door.SetActive(false);
+                winBlock.gameObject.SetActive(true);
             }
         }
 
