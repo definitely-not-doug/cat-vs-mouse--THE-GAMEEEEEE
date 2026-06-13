@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using System;
+
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -17,13 +18,22 @@ public class PlayerController : MonoBehaviour
     public GameObject restartButton;
     public GameObject winText;
     public GameObject door;
-    public gameObject winBlock;
+    
     public GameObject winBox;
     public float spawnKitty = 15f;
     public float spawnTime = 1;
     public GameObject kittyCat;
     public float initialTime = 60f;
     private Boolean con = false;
+
+    public AudioClip chompAudio;
+    public AudioClip biteAudio;
+    public AudioClip materializeCatAudioOne;
+    public AudioClip materializeCatAudioTwo;
+    public AudioClip materializeCatAudioThree;
+    
+
+    private AudioSource playerAudio;
     
     PlayerInput playerInput;
 
@@ -32,14 +42,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         kittyCatCount.color = Color.red;
+        
        
         rb = GetComponent <Rigidbody>();
         count = 0f;
         winText.SetActive(false);
         restartButton.SetActive(false);
-        winBlock.SetActive(false);
+        winBox.SetActive(false);
+        playerAudio = GetComponent<AudioSource>();
         kittyCatCount.text = "Kitty Cats: " + spawnTime.ToString();
         objectiveText.text = "Objective: Collect 5 cheese items.";
+
+        playerAudio.PlayOneShot(materializeCatAudioOne, 1f);
+
+
     }
 
     // Update is called once per frame
@@ -112,6 +128,18 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Item"))
         {
+            int randomSound = UnityEngine.Random.Range(1, 3);
+
+            if (randomSound == 1)
+            {
+                playerAudio.PlayOneShot(chompAudio, 1f);
+            }
+            else
+            {
+                playerAudio.PlayOneShot(biteAudio, 1f);
+            }
+
+            
             other.gameObject.SetActive(false);
             count = count + 1;
             SetCount();
@@ -120,11 +148,12 @@ public class PlayerController : MonoBehaviour
             {
                 objectiveText.text = "Objective: Escape through the back door!";
                 door.SetActive(false);
-                winBlock.gameObject.SetActive(true);
+                winBox.gameObject.SetActive(true);
+               
             }
         }
 
-        if (other.gameObject.CompareTag("Win"))
+       if (other.gameObject.CompareTag("Win"))
         {
             con = true;
             restartButton.gameObject.SetActive(true);
@@ -170,6 +199,20 @@ public class PlayerController : MonoBehaviour
             {
                 if (initialTime <= 60 - spawnKitty * spawnTime)
                 {
+                    int randomSound = UnityEngine.Random.Range(1, 4);
+
+                    if (randomSound == 1)
+                    {
+                        playerAudio.PlayOneShot(materializeCatAudioOne, 1f);
+                    }
+                    else if(randomSound == 2)
+                    {
+                        playerAudio.PlayOneShot(materializeCatAudioTwo, 1f);
+                    }
+                    else if(randomSound ==3)
+                    {
+                        playerAudio.PlayOneShot(materializeCatAudioThree, 1f);
+                    }
 
                     Instantiate(kittyCat, new Vector3(-10, 0, 27.5f), Quaternion.identity);
                     kittyCat.tag = "Enemy";
@@ -184,4 +227,6 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+
 }
