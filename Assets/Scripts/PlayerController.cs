@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip materializeCatAudioOne;
     public AudioClip materializeCatAudioTwo;
     public AudioClip materializeCatAudioThree;
+    public AudioClip winOne;
+    public AudioClip winTwo;
     
 
     private AudioSource playerAudio;
@@ -101,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         if (initialTime == 0 && con == false)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
             winText.gameObject.SetActive(true);
             restartButton.gameObject.SetActive(true);
@@ -155,6 +157,16 @@ public class PlayerController : MonoBehaviour
 
        if (other.gameObject.CompareTag("Win"))
         {
+            int randomSound = UnityEngine.Random.Range(1, 3);
+            if (randomSound == 1)
+            {
+                playerAudio.PlayOneShot(winOne, 1f);
+            }
+            else if (randomSound == 2)
+            {
+                playerAudio.PlayOneShot(winTwo, 1f);
+            }
+
             con = true;
             restartButton.gameObject.SetActive(true);
             winText.SetActive(true);
@@ -182,7 +194,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
             restartButton.gameObject.SetActive(true);
             winText.gameObject.SetActive(true);
@@ -203,15 +215,15 @@ public class PlayerController : MonoBehaviour
 
                     if (randomSound == 1)
                     {
-                        playerAudio.PlayOneShot(materializeCatAudioOne, 1f);
+                        playerAudio.PlayOneShot(materializeCatAudioOne, 0.5f);
                     }
                     else if(randomSound == 2)
                     {
-                        playerAudio.PlayOneShot(materializeCatAudioTwo, 1f);
+                        playerAudio.PlayOneShot(materializeCatAudioTwo, 0.5f);
                     }
                     else if(randomSound ==3)
                     {
-                        playerAudio.PlayOneShot(materializeCatAudioThree, 1f);
+                        playerAudio.PlayOneShot(materializeCatAudioThree, 0.5f);
                     }
 
                     Instantiate(kittyCat, new Vector3(-10, 0, 27.5f), Quaternion.identity);
